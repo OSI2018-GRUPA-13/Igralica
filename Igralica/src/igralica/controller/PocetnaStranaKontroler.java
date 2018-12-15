@@ -1,5 +1,7 @@
 package igralica.controller;
 
+import igralica.dialogs.RegistracijaKorisnikaDijalog;
+import igralica.model.Korisnik;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -31,7 +33,12 @@ public class PocetnaStranaKontroler {
 
 	@FXML
 	void Registracija(ActionEvent event) {
+		dodajKorisnika(new Korisnik());
+	}
 
+	private void dodajKorisnika(Korisnik korisnik) {
+		RegistracijaKorisnikaDijalog dialog = new RegistracijaKorisnikaDijalog("Dodaj ", korisnik);
+		dialog.kreirajIPrikazi();
 	}
 
 }
