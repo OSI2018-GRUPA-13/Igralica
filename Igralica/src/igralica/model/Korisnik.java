@@ -13,7 +13,6 @@ public class Korisnik {
 
 	public Korisnik() {
 		super();
-
 	}
 
 	public String getIme() {
