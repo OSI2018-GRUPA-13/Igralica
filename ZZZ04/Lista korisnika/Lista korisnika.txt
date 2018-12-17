@@ -1,2 +1,0 @@
-korisnickoIme#ime#prezime#salt#EnkriptovanaIBase64KodovanaKorisnickaLozinka#fotografija
-danielcrnovcic#Daniel#Crnovcic#vFS06sClNuEVQ6IckJQRcmuAw7uPQW#0eIHkENTpNYkoJrKGEhk41NNoTSyfEdZ6F04g7bbNbk=#.\Slike korisnika\Agnes Gru.png
