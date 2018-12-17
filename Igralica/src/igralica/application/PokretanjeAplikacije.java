@@ -9,7 +9,7 @@ public class PokretanjeAplikacije extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FxmlLoader.load(getClass(), "/igralica/view/PocetnaStrana.fxml", "Pocetna strana");
+		FxmlLoader.load(getClass(), "/igralica/view/PocetnaStrana.fxml", "Početna strana");
 	}
 
 	public static void main(String[] args) {
