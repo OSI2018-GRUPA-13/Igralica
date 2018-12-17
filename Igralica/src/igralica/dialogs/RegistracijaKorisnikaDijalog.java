@@ -1,7 +1,10 @@
 package igralica.dialogs;
 
+import static igralica.controller.GlavnaStranaKontroler.*;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import igralica.model.Korisnik;
 import igralica.utility.PasswordUtils;
@@ -25,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
-import javafx.stage.Stage;;
+import javafx.stage.Stage;
 
 public class RegistracijaKorisnikaDijalog implements Putanje{
 
@@ -44,6 +47,7 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 	private ImageView ivFotografija;
 
 	public static ArrayList<String> listaKorisnickihImena = new ArrayList<>();
+	public static HashMap<String, Integer> mapaBodovaNaProfilu = new HashMap<String, Integer>();
 
 	/**
 	 * Inicijalizacija dijaloga za registraciju
@@ -64,7 +68,7 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 		pfLozinkaPonovljeno = new PasswordField();
 		tfFotografija = new TextField();
 		ivFotografija = new ImageView(
-				new Image(getClass().getResourceAsStream("/igralica/style/Podrazumijevana_slika.png")));
+				new Image(getClass().getResourceAsStream("/igralica/style/PodrazumijevanaSlika.png")));
 
 		ucitajListuKorisnickihImena();
 		setKorisnik(korisnik);
@@ -263,6 +267,8 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 			korisnik.setFotografija(new File(tfFotografija.getText()));
 			korisnik.setBrojPoenaNaProfilu(10);
 
+			unesiBodove(korisnik.getKorisnickoIme());
+
 			try (PrintWriter pw = new PrintWriter(
 					new BufferedWriter(new FileWriter(PUTANJA_DO_LISTE_KORISNIKA, true)), true)) {
 				pw.println(upisiPodatke());
@@ -307,6 +313,15 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 			String porukaOGresci = "IO greška se javlja tokom čitanja iz stream-a.!";
 			ObavjestenjaDijalog.showErrorDialog("Greška", "Došlo je do greške!", porukaOGresci);
 		}
+	}
+
+	/**
+	 * Unos bodova na profilu korisnika tokom registracije
+	 **/
+	private static void unesiBodove(String korisnickoIme){
+		mapaBodovaNaProfilu = ucitajBodoveNaProfilu(PUTANJA_DO_BODOVA_KORISNIKA);
+		mapaBodovaNaProfilu.put(korisnickoIme, 10);
+		sacuvajBodoveNaProfilu(mapaBodovaNaProfilu, PUTANJA_DO_BODOVA_KORISNIKA);
 	}
 
 	/**

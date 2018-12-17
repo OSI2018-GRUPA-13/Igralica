@@ -8,4 +8,5 @@ public interface Putanje {
 
 	public final static String PUTANJA_DO_SLIKA_KORISNIKA = "Slike korisnika" + File.separator;
 
+	public final static String PUTANJA_DO_BODOVA_KORISNIKA = "Bodovi korisnika" + File.separator + "Bodovi korisnika.ser";
 }
