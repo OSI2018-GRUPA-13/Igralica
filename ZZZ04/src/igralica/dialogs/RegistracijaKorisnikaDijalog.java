@@ -1,10 +1,12 @@
 package igralica.dialogs;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import igralica.model.Korisnik;
 import igralica.utility.PasswordUtils;
 import igralica.utility.Putanje;
+import igralica.utility.ValidacijaUnosa;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -41,6 +43,16 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 	private TextField tfFotografija;
 	private ImageView ivFotografija;
 
+	public static ArrayList<String> listaKorisnickihImena = new ArrayList<>();
+
+	/**
+	 * Inicijalizacija dijaloga za registraciju
+	 *
+	 * @param naslov
+	 *            naslov dijaloga
+	 * @param korisnik
+	 *            dodavanje korisnika na sistem
+	 **/
 	public RegistracijaKorisnikaDijalog(String naslov, Korisnik korisnik) {
 
 		this.naslovDijaloga = naslov;
@@ -54,6 +66,7 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 		ivFotografija = new ImageView(
 				new Image(getClass().getResourceAsStream("/igralica/style/Podrazumijevana_slika.png")));
 
+		ucitajListuKorisnickihImena();
 		setKorisnik(korisnik);
 	}
 
@@ -76,54 +89,57 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 		gridpane.getColumnConstraints().addAll(kolona1, kolona2);
 
 		// Labela i tekst polje za ime korisnika
-				Label lblNaziv = new Label("Ime:");
-				lblNaziv.setId("labela");
-				gridpane.add(new VBox(5, lblNaziv, tfImeKorisnika), 0, 0, 1, 1);
+		Label lblNaziv = new Label("Ime:");
+		lblNaziv.setId("labela");
+		gridpane.add(new VBox(5, lblNaziv, tfImeKorisnika), 0, 0, 1, 1);
 
-				// Labela i tekst polje za prezime korisnika
-				Label lblPrezime = new Label("Prezime:");
-				lblPrezime.setId("labela");
-				gridpane.add(new VBox(5, lblPrezime, tfPrezimeKorisnika), 0, 1, 1, 1);
+		// Labela i tekst polje za prezime korisnika
+		Label lblPrezime = new Label("Prezime:");
+		lblPrezime.setId("labela");
+		gridpane.add(new VBox(5, lblPrezime, tfPrezimeKorisnika), 0, 1, 1, 1);
 
-				// Labela i tekst polje za korisničko ime
-				Label lblKorisnickoIme = new Label("Korisničko ime:");
-				lblKorisnickoIme.setId("labela");
-				gridpane.add(new VBox(5, lblKorisnickoIme, tfKorisnickoIme), 0, 2, 1, 1);
+		// Labela i tekst polje za korisničko ime
+		Label lblKorisnickoIme = new Label("Korisničko ime:");
+		lblKorisnickoIme.setId("labela");
+		gridpane.add(new VBox(5, lblKorisnickoIme, tfKorisnickoIme), 0, 2, 1, 1);
 
-				// Labela i tekst polje za lozinku
-				Label lblLozinka = new Label("Lozinka:");
-				lblLozinka.setId("labela");
-				gridpane.add(new VBox(5, lblLozinka, pfLozinka), 0, 3, 1, 1);
+		// Labela i tekst polje za lozinku
+		Label lblLozinka = new Label("Lozinka:");
+		lblLozinka.setId("labela");
+		gridpane.add(new VBox(5, lblLozinka, pfLozinka), 0, 3, 1, 1);
 
-				// Labela i tekst polje za ponavljanje lozinke
-				Label lblPonoviLozinku = new Label("Ponovi lozinku:");
-				lblPonoviLozinku.setId("labela");
-				gridpane.add(new VBox(5, lblPonoviLozinku, pfLozinkaPonovljeno), 0, 4, 1, 1);
+		// Labela i tekst polje za ponavljanje lozinke
+		Label lblPonoviLozinku = new Label("Ponovi lozinku:");
+		lblPonoviLozinku.setId("labela");
+		gridpane.add(new VBox(5, lblPonoviLozinku, pfLozinkaPonovljeno), 0, 4, 1, 1);
 
-				// Fotografija
-				ivFotografija.setFitHeight(200);
-				ivFotografija.setFitWidth(200);
-				ivFotografija.setSmooth(true);
-				ivFotografija.setCache(true);
-				GridPane.setHalignment(ivFotografija, HPos.CENTER);
-				gridpane.add(ivFotografija, 1, 0, 1, 4);
+		// Fotografija
+		ivFotografija.setFitHeight(200);
+		ivFotografija.setFitWidth(200);
+		ivFotografija.setSmooth(true);
+		ivFotografija.setCache(true);
+		GridPane.setHalignment(ivFotografija, HPos.CENTER);
+		gridpane.add(ivFotografija, 1, 0, 1, 4);
 
-				// Labela, tekst polje i dugme za izbor fotografije
-				Label lblFotografija = new Label("Fotografija:");
-				lblFotografija.setId("labela");
-				tfFotografija.setPrefWidth(180);
+		// Labela, tekst polje i dugme za izbor fotografije
+		Label lblFotografija = new Label("Fotografija:");
+		lblFotografija.setId("labela");
+		tfFotografija.setPrefWidth(180);
 
-				Button btnUnesiteFotografiju = new Button("Unesi fotografiju");
-				btnUnesiteFotografiju.setPrefWidth(200);
-				btnUnesiteFotografiju.setOnAction(e -> ucitajFotografiju());
+		Button btnUnesiteFotografiju = new Button("Unesi fotografiju");
+		btnUnesiteFotografiju.setId("dugme");
+		btnUnesiteFotografiju.setPrefWidth(200);
+		btnUnesiteFotografiju.setOnAction(e -> ucitajFotografiju());
 
-				gridpane.add(new VBox(5, lblFotografija, new HBox(5, btnUnesiteFotografiju)), 1, 4, 1, 1);
+		gridpane.add(new VBox(5, lblFotografija, new HBox(5, btnUnesiteFotografiju)), 1, 4, 1, 1);
 
 		// Dugmad za potvrdu i otkazivanje
 		Button btnPotvrdi = new Button("Potvrdi");
+		btnPotvrdi.setId("dugme");
 		btnPotvrdi.setOnAction(e -> potvrdi());
 
 		Button btnOtkazi = new Button("Otkazi");
+		btnOtkazi.setId("dugme");
 		btnOtkazi.setOnAction(e -> zatvori());
 
 		HBox hbButtons = new HBox(10, btnPotvrdi, btnOtkazi);
@@ -197,8 +213,42 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 	 * @return true ako je korisnik pravilno unio potrebne podatke
 	 **/
 	private boolean provjeriUnos() {
-		// NIJE ZAVRSENO
-		return true;
+		String porukaOPogresnomUnosu = "";
+
+		if (ValidacijaUnosa.praznoPolje(tfImeKorisnika.getText())) {
+			porukaOPogresnomUnosu += "Unesite ime korisnika!\n";
+		}
+
+		if (ValidacijaUnosa.praznoPolje(tfPrezimeKorisnika.getText())) {
+			porukaOPogresnomUnosu += "Unesite prezime korisnika!\n";
+		}
+
+		if (ValidacijaUnosa.praznoPolje(tfKorisnickoIme.getText())) {
+			porukaOPogresnomUnosu += "Unesite korisničko ime!\n";
+		}
+
+		File photo = new File(tfFotografija.getText());
+		if (!photo.isFile()) {
+			porukaOPogresnomUnosu += "Unesite fotografiju!\n";
+		}
+
+		if (porukaOPogresnomUnosu.length() != 0) {
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje",
+					"Niste unijeli sva polja!\nUnesite sljedeća polja u dijalog:", porukaOPogresnomUnosu);
+			return false;
+		} else if (ValidacijaUnosa.vecPostoji(tfKorisnickoIme.getText())) {
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Uneseno korisničko ime već postoji!",
+					"Pokušajte ponovo.");
+			return false;
+		} else if (ValidacijaUnosa.duzinaLozinke(pfLozinka.getText())) {
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Lozinka mora biti duža od četiri karaktera!",
+					"Pokušajte ponovo.");
+			return false;
+		} else if (ValidacijaUnosa.nepodudaranjeLozinki(pfLozinka.getText(), pfLozinkaPonovljeno.getText())) {
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Unesene lozinke se ne podudaraju!", "Pokušajte ponovo.");
+			return false;
+		} else
+			return true;
 	}
 
 	/*
@@ -239,6 +289,24 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 		linijaUpisa = korisnik.getKorisnickoIme() + "#" + korisnik.getIme() + "#" + korisnik.getPrezime() + "#" + salt
 				+ "#" + enkriptovanaIBase64KodovanaKorisnickaLozinka + "#" + korisnik.getFotografija();
 		return linijaUpisa;
+	}
+
+	/*
+	 * Ucitavanje korisnickih imena sa fajl-sistema
+	 **/
+
+	private void ucitajListuKorisnickihImena() {
+		try (BufferedReader in = new BufferedReader(new FileReader(PUTANJA_DO_LISTE_KORISNIKA))) {
+			String linijaDatoteke;
+			String[] podaci;
+			while ((linijaDatoteke = in.readLine()) != null) {
+				podaci = linijaDatoteke.split("#");
+				listaKorisnickihImena.add(podaci[0]);
+			}
+		} catch (IOException ex) {
+			String porukaOGresci = "IO greška se javlja tokom čitanja iz stream-a.!";
+			ObavjestenjaDijalog.showErrorDialog("Greška", "Došlo je do greške!", porukaOGresci);
+		}
 	}
 
 	/**
