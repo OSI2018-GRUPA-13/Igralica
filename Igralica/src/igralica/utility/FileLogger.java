@@ -8,12 +8,12 @@ import java.util.logging.Logger;
 
 public class FileLogger {
 
-	private static final Logger logger = Logger.getLogger("/Zabiljeske/FileLogger");
+	private static final Logger logger = Logger.getLogger(FileLogger.class.getName());
 
 	public static void log(Level level, String msg, Throwable thrown) {
 		FileHandler fh = null;
 		try {
-			fh = new FileHandler("/Zabiljeske/log.xml", true);
+			fh = new FileHandler("Zabiljeske/log.xml", true);
 			logger.setUseParentHandlers(false);
 			logger.addHandler(fh);
 			logger.log(level, msg, thrown);

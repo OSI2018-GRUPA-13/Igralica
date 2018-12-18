@@ -14,8 +14,10 @@ import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.logging.Level;
 
+import igralica.model.Kljuc;
 import igralica.dialogs.ObavjestenjaDijalog;
 import igralica.utility.FileLogger;
+import igralica.utility.FxmlLoader;
 import igralica.utility.Putanje;
 
 import javafx.event.ActionEvent;
@@ -92,7 +94,9 @@ public class GlavnaStranaKontroler implements Putanje {
 	@FXML
 	private Button btnIzadji;
 
+	public static String tipIgre;
 	public static Label lblBrojBodovaNaProfilu;
+	public static HashMap<String, Kljuc> mapaKljuceva = new HashMap<String, Kljuc>();
 
 	@FXML
 	void initialize() throws MalformedURLException {
@@ -102,6 +106,8 @@ public class GlavnaStranaKontroler implements Putanje {
 
 		krerijaLabeluZaBodoveNaProfilu();
 		lblBrojBodovaNaProfilu.setText(Integer.toString(korisnik.getBrojPoenaNaProfilu()));
+
+		mapaKljuceva = ucitajKljuceve(PUTANJA_DO_LISTE_KLJUCEVA);
 
 		lblIme.setText(korisnik.getKorisnickoIme());
 
@@ -131,7 +137,20 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaLoto(ActionEvent event) {
-
+		if (daLiJeIgraAktivirana("Loto")) {
+			if (daLiImaDovoljnoBodova("Loto")) {
+				kreirajIgru("Loto");
+				FxmlLoader.load(getClass(), "/igralica/view/Loto.fxml", "Loto");
+			} else {
+				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
+						"Nije moguće pokrenuti igru \"Loto\" \nNemate doboljno bodova na profilu!");
+			}
+		} else {
+			setTipIgre("Loto");
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
+					"Nije moguće pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje ključa isteklo!");
+			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
+		}
 	}
 
 	@FXML
@@ -161,6 +180,7 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void izadji(ActionEvent event) {
+		sacuvajKljuceve(mapaKljuceva, PUTANJA_DO_LISTE_KLJUCEVA);
 		mapaBodovaNaProfilu.put(korisnik.getKorisnickoIme(), korisnik.getBrojPoenaNaProfilu());
 		sacuvajBodoveNaProfilu(mapaBodovaNaProfilu, PUTANJA_DO_BODOVA_KORISNIKA);
 		System.exit(0);
@@ -184,6 +204,20 @@ public class GlavnaStranaKontroler implements Putanje {
 		lblBrojBodovaNaProfilu.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
 		lblBrojBodovaNaProfilu.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
 		hbKontejnerZaLabelu.getChildren().add(lblBrojBodovaNaProfilu);
+	}
+
+	private boolean daLiJeIgraAktivirana(String tipIgre) {
+		// NE ZAVRSENO
+		return true;
+	}
+
+	private boolean daLiImaDovoljnoBodova(String tipIgre) {
+		// NE ZAVRSENO
+		return true;
+	}
+
+	private void kreirajIgru(String tipIgre) {
+		// NE ZAVRSENO
 	}
 
 	/*
@@ -223,6 +257,50 @@ public class GlavnaStranaKontroler implements Putanje {
 					"Nije moguće učitati bodove sa sljedeće putanje: \n" + new File(putanja).getAbsolutePath());
 		}
 		return null;
+	}
+
+	/*
+	 * Serijalizacija kljuceva
+	 */
+	private static boolean sacuvajKljuceve(HashMap<String, Kljuc> mapaKljuceva, String putanja) {
+		File putanjaFile = new File(putanja);
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(putanjaFile))) {
+			oos.writeObject(new HashMap<String, Kljuc>(mapaKljuceva));
+			oos.close();
+			return true;
+		} catch (IOException ex) {
+			FileLogger.log(Level.SEVERE, null, ex);
+			ObavjestenjaDijalog.showErrorDialog("Greška", "Greška tokom serijalizacije ključeva.",
+					"Nije moguće sačuvati ključeve na sljedećoj putanji: \n" + putanjaFile.getAbsolutePath());
+		}
+		return false;
+	}
+
+	/*
+	 * Deserijalizacija kljuceva
+	 */
+	@SuppressWarnings("unchecked")
+	private HashMap<String, Kljuc> ucitajKljuceve(String putanja) {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(putanja)))) {
+			HashMap<String, Kljuc> mapa = (HashMap<String, Kljuc>) ois.readObject();
+			return mapa;
+		} catch (EOFException ex) {
+			FileLogger.log(Level.WARNING, null, ex);
+			return new HashMap<String, Kljuc>();
+		} catch (ClassNotFoundException | IOException ex) {
+			FileLogger.log(Level.WARNING, null, ex);
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom deserijalizacije kljuceva.",
+					"Nije moguće učitati kljuceve sa sljedeće putanje: \n" + new File(putanja).getAbsolutePath());
+		}
+		return null;
+	}
+
+	public static String getTipIgre() {
+		return tipIgre;
+	}
+
+	public static void setTipIgre(String tipIgre) {
+		GlavnaStranaKontroler.tipIgre = tipIgre;
 	}
 
 }
