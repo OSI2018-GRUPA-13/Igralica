@@ -1,1 +1,3 @@
 korisnickoIme#ime#prezime#salt#EnkriptovanaIBase64KodovanaKorisnickaLozinka#fotografija
+Agnes#Agnes#Gru#q8vCFkqFHtA6afWElJwOFbsRelTdVj#/vjVl+SRYrcq1KWIBldIl3GyluXQVW4VjCRAxuUmG/s=#D:\Svetozar\Fakultet\Osnovi softverskog inženjerstva\Programiranje\ZZZ97\Slike korisnika\Agnes Gru.png
+Wile#Wile#Coyote#hnSsJVj346I2VWHB0iHp2jGnMxSqtX#hHYlBc3rNlTPJAvol/KWavr9EaBMYwGipxMOojNzemg=#D:\Svetozar\Fakultet\Osnovi softverskog inženjerstva\Programiranje\ZZZ97\Slike korisnika\Wile E. Coyote.png
