@@ -10,6 +10,7 @@ public class Korisnik {
 	private int brojPoenaNaProfilu;
 	private String lozinka;
 	private File fotografija;
+	private Igra trenutnaIgra;
 
 	public Korisnik() {
 		super();
@@ -61,6 +62,14 @@ public class Korisnik {
 
 	public void setFotografija(File fotografija) {
 		this.fotografija = fotografija;
+	}
+
+	public Igra getTrenutnaIgra() {
+		return trenutnaIgra;
+	}
+
+	public void setTrenutnaIgra(Igra trenutnaIgra) {
+		this.trenutnaIgra = trenutnaIgra;
 	}
 
 }

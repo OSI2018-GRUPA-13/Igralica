@@ -11,15 +11,23 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.MalformedURLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
+import igralica.model.Igra;
 import igralica.model.Kljuc;
+import igralica.model.Kljuc.StatusKljuca;
 import igralica.dialogs.ObavjestenjaDijalog;
 import igralica.utility.FileLogger;
 import igralica.utility.FxmlLoader;
 import igralica.utility.Putanje;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -97,6 +105,7 @@ public class GlavnaStranaKontroler implements Putanje {
 	public static String tipIgre;
 	public static Label lblBrojBodovaNaProfilu;
 	public static HashMap<String, Kljuc> mapaKljuceva = new HashMap<String, Kljuc>();
+	public static ObservableList<Igra> listaOdigranihIgara;
 
 	@FXML
 	void initialize() throws MalformedURLException {
@@ -108,6 +117,9 @@ public class GlavnaStranaKontroler implements Putanje {
 		lblBrojBodovaNaProfilu.setText(Integer.toString(korisnik.getBrojPoenaNaProfilu()));
 
 		mapaKljuceva = ucitajKljuceve(PUTANJA_DO_LISTE_KLJUCEVA);
+
+		// kasnije promijeni deserijalizacijom
+		listaOdigranihIgara = FXCollections.observableArrayList();
 
 		lblIme.setText(korisnik.getKorisnickoIme());
 
@@ -207,17 +219,57 @@ public class GlavnaStranaKontroler implements Putanje {
 	}
 
 	private boolean daLiJeIgraAktivirana(String tipIgre) {
-		// NE ZAVRSENO
-		return true;
+		for (Map.Entry<String, Kljuc> ulaz : mapaKljuceva.entrySet()) {
+			if(ulaz.getValue().getImeVlasnikaKljuca().equals(korisnik.getKorisnickoIme()) && ulaz.getValue().getTipIgre().equals(tipIgre)){
+				if( ( daLiJeIstekaoKljuc(ulaz.getValue().getVrijemeDeaktiviranjaKljuca()) && ulaz.getValue().getStatusKLjuca().equals(StatusKljuca.AKTIVAN) )
+						|| ulaz.getValue().getStatusKLjuca().equals(StatusKljuca.ISKORISCEN)){
+					// ako je kljuc neiskoristen ime se nece podudarati tako da ne mozemo uci u ovaj iskaz
+					ulaz.getValue().setStatusKLjuca(StatusKljuca.ISKORISCEN);
+					mapaKljuceva.put(ulaz.getKey(), ulaz.getValue());
+//					mapaKljuceva.replace(ulaz.getKey(), ulaz.getValue());
+				}
+				else
+					return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean daLiJeIstekaoKljuc(LocalDateTime vrijemeDeaktiviranjaKljuca){
+		LocalDateTime trenutnoVrijeme = LocalDateTime.now();
+		return trenutnoVrijeme.isAfter(vrijemeDeaktiviranjaKljuca);
 	}
 
 	private boolean daLiImaDovoljnoBodova(String tipIgre) {
 		// NE ZAVRSENO
-		return true;
+		boolean rezultat = false;
+		switch (tipIgre) {
+		case "Pogodi broj":
+			if(korisnik.getBrojPoenaNaProfilu() > 0)
+				rezultat = true;
+			break;
+		case "Kviz":
+			if(korisnik.getBrojPoenaNaProfilu() > 0)
+				rezultat = true;
+			break;
+		case "Loto":
+			if(korisnik.getBrojPoenaNaProfilu() > 0)
+				rezultat = true;
+			break;
+
+		default:
+			// dijalog
+		}
+		rezultat = true;	// samo privremeno
+		return rezultat;
 	}
 
 	private void kreirajIgru(String tipIgre) {
-		// NE ZAVRSENO
+		LocalDateTime vrijeme = LocalDateTime.now();
+		DateTimeFormatter formatVremena = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+		String datumIgranja = formatVremena.format(vrijeme);
+		korisnik.setTrenutnaIgra(new Igra(tipIgre, korisnik.getKorisnickoIme(), datumIgranja, 0));
+		listaOdigranihIgara.add(korisnik.getTrenutnaIgra());
 	}
 
 	/*
