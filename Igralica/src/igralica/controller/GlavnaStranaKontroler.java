@@ -120,7 +120,7 @@ public class GlavnaStranaKontroler implements Putanje {
 
 		// kasnije promijeni deserijalizacijom
 		listaOdigranihIgara = FXCollections.observableArrayList();
-
+		
 		lblIme.setText(korisnik.getKorisnickoIme());
 
 		prikazSlike();
