@@ -113,7 +113,7 @@ public class GlavnaStranaKontroler implements Putanje {
 		mapaBodovaNaProfilu = ucitajBodoveNaProfilu(PUTANJA_DO_BODOVA_KORISNIKA);
 		korisnik.setBrojPoenaNaProfilu(mapaBodovaNaProfilu.get(korisnik.getKorisnickoIme()));
 
-		krerijaLabeluZaBodoveNaProfilu();
+		kreirајLabeluZaBodoveNaProfilu();
 		lblBrojBodovaNaProfilu.setText(Integer.toString(korisnik.getBrojPoenaNaProfilu()));
 
 		mapaKljuceva = ucitajKljuceve(PUTANJA_DO_LISTE_KLJUCEVA);
@@ -155,12 +155,12 @@ public class GlavnaStranaKontroler implements Putanje {
 				FxmlLoader.load(getClass(), "/igralica/view/Loto.fxml", "Loto");
 			} else {
 				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-						"Nije moguće pokrenuti igru \"Loto\" \nNemate doboljno bodova na profilu!");
+						"Nije moguÄ‡e pokrenuti igru \"Loto\" \nNemate doboljno bodova na profilu!");
 			}
 		} else {
 			setTipIgre("Loto");
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-					"Nije moguće pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje ključa isteklo!");
+					"Nije moguÄ‡e pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
 		}
 	}
@@ -209,7 +209,7 @@ public class GlavnaStranaKontroler implements Putanje {
 		ivAvatar.setImage(slika);
 	}
 
-	private void krerijaLabeluZaBodoveNaProfilu() {
+	private void kreirајLabeluZaBodoveNaProfilu() {
 		lblBrojBodovaNaProfilu = new Label(Integer.toString(korisnik.getBrojPoenaNaProfilu()));
 		lblBrojBodovaNaProfilu.setFont(new Font("System", 17));
 		lblBrojBodovaNaProfilu.setTextFill(Color.web("#e42f06"));
@@ -283,8 +283,8 @@ public class GlavnaStranaKontroler implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("Greška", "Greška tokom serijalizacije bodova na profilu korisnika.",
-					"Nije moguće sačuvati bodove na sljedećoj putanji: \n" + putanjaFile.getAbsolutePath());
+			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije bodova na profilu korisnika.",
+					"Nije moguÄ‡e saÄ�uvati bodove na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
 		}
 		return false;
 	}
@@ -306,7 +306,7 @@ public class GlavnaStranaKontroler implements Putanje {
 			FileLogger.log(Level.WARNING, null, ex);
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje",
 					"Upozorenje tokom deserijalizacije bodova na profilu korisnika.",
-					"Nije moguće učitati bodove sa sljedeće putanje: \n" + new File(putanja).getAbsolutePath());
+					"Nije moguÄ‡e uÄ�itati bodove sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
 		}
 		return null;
 	}
@@ -322,8 +322,8 @@ public class GlavnaStranaKontroler implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("Greška", "Greška tokom serijalizacije ključeva.",
-					"Nije moguće sačuvati ključeve na sljedećoj putanji: \n" + putanjaFile.getAbsolutePath());
+			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije kljuÄ�eva.",
+					"Nije moguÄ‡e saÄ�uvati kljuÄ�eve na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
 		}
 		return false;
 	}
@@ -342,7 +342,7 @@ public class GlavnaStranaKontroler implements Putanje {
 		} catch (ClassNotFoundException | IOException ex) {
 			FileLogger.log(Level.WARNING, null, ex);
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom deserijalizacije kljuceva.",
-					"Nije moguće učitati kljuceve sa sljedeće putanje: \n" + new File(putanja).getAbsolutePath());
+					"Nije moguÄ‡e uÄ�itati kljuceve sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
 		}
 		return null;
 	}
