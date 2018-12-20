@@ -37,12 +37,12 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </PasswordField>
-            <Button fx:id="btnPrijava" alignment="CENTER" blendMode="GREEN" contentDisplay="CENTER" focusTraversable="false" layoutX="130.0" layoutY="270.0" mnemonicParsing="false" onAction="#Prijava" prefHeight="40.0" prefWidth="125.0" text="Prijava" textAlignment="CENTER" textFill="#855e11">
+            <Button fx:id="btnPrijava" alignment="CENTER" blendMode="GREEN" contentDisplay="CENTER" focusTraversable="false" layoutX="130.0" layoutY="270.0" mnemonicParsing="false" onAction="#prijava" prefHeight="40.0" prefWidth="125.0" text="Prijava" textAlignment="CENTER" textFill="#855e11">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnRegistracija" alignment="CENTER" blendMode="GREEN" contentDisplay="CENTER" focusTraversable="false" layoutX="133.0" layoutY="325.0" mnemonicParsing="false" onAction="#Registracija" prefHeight="40.0" prefWidth="125.0" text="Registracija" textAlignment="CENTER" textFill="#855e11">
+            <Button fx:id="btnRegistracija" alignment="CENTER" blendMode="GREEN" contentDisplay="CENTER" focusTraversable="false" layoutX="133.0" layoutY="325.0" mnemonicParsing="false" onAction="#registracija" prefHeight="40.0" prefWidth="125.0" text="Registracija" textAlignment="CENTER" textFill="#855e11">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
