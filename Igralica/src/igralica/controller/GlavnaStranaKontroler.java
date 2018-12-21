@@ -3,18 +3,26 @@ package igralica.controller;
 import static igralica.controller.PocetnaStranaKontroler.korisnik;
 import static igralica.dialogs.RegistracijaKorisnikaDijalog.mapaBodovaNaProfilu;
 
+import java.io.BufferedWriter;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -22,6 +30,7 @@ import igralica.model.Igra;
 import igralica.model.Kljuc;
 import igralica.model.Kljuc.StatusKljuca;
 import igralica.dialogs.ObavjestenjaDijalog;
+import igralica.utility.CSVUtils;
 import igralica.utility.FileLogger;
 import igralica.utility.FxmlLoader;
 import igralica.utility.Putanje;
@@ -35,6 +44,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -42,6 +52,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 
 public class GlavnaStranaKontroler implements Putanje {
 
@@ -79,22 +92,22 @@ public class GlavnaStranaKontroler implements Putanje {
 	private Button btnInfoMojBroj;
 
 	@FXML
-	private ComboBox<?> cbRangLista;
+	private ComboBox<String> cbRangLista;
 
 	@FXML
-	private TableView<?> tblRangLista;
+	private TableView<Igra> tblRangLista;
 
 	@FXML
-	private TableColumn<?, ?> tcPozicija;
+	private TableColumn<Igra, String> tcPozicija;
 
 	@FXML
-	private TableColumn<?, ?> tcImeIgraca;
+	private TableColumn<Igra, String> tcImeIgraca;
 
 	@FXML
-	private TableColumn<?, ?> tcDatumIgranja;
+	private TableColumn<Igra, String> tcDatumIgranja;
 
 	@FXML
-	private TableColumn<?, ?> tcBrojBodova;
+	private TableColumn<Igra, String> tcBrojBodova;
 
 	@FXML
 	private Button btnSacuvajRezultat;
@@ -106,6 +119,7 @@ public class GlavnaStranaKontroler implements Putanje {
 	public static Label lblBrojBodovaNaProfilu;
 	public static HashMap<String, Kljuc> mapaKljuceva = new HashMap<String, Kljuc>();
 	public static ObservableList<Igra> listaOdigranihIgara;
+	public static ObservableList<Igra> listaGrupisanihIgara;
 
 	@FXML
 	void initialize() throws MalformedURLException {
@@ -118,9 +132,20 @@ public class GlavnaStranaKontroler implements Putanje {
 
 		mapaKljuceva = ucitajKljuceve(PUTANJA_DO_LISTE_KLJUCEVA);
 
-		// kasnije promijeni deserijalizacijom
-		listaOdigranihIgara = FXCollections.observableArrayList();
-		
+		cbRangLista.getItems().add("Pogodi broj");
+		cbRangLista.getItems().add("Kviz");
+		cbRangLista.getItems().add("Loto");
+		cbRangLista.getItems().add("Moj broj");
+
+		listaOdigranihIgara = ucitajOdigraneIgre(PUTANJA_DO_RANG_LISTE);
+		// tblRangLista.setItems(listaOdigranihIgara);
+		// tblRangLista.refresh();
+
+		tcPozicija.setCellValueFactory(new PropertyValueFactory<>("pozicijaURangListi"));
+		tcDatumIgranja.setCellValueFactory(new PropertyValueFactory<>("datumIgranja"));
+		tcBrojBodova.setCellValueFactory(new PropertyValueFactory<>("brojOsvojenihPoena"));
+		tcImeIgraca.setCellValueFactory(new PropertyValueFactory<>("imeIgraca"));
+
 		lblIme.setText(korisnik.getKorisnickoIme());
 
 		prikazSlike();
@@ -139,7 +164,7 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaKviz(ActionEvent event) {
-if (daLiJeIgraAktivirana("Kviz")) {
+		if (daLiJeIgraAktivirana("Kviz")) {
 			if (daLiImaDovoljnoBodova("Kviz")) {
 				kreirajIgru("Kviz");
 				FxmlLoader.load(getClass(), "/igralica/view/Kviz.fxml", "Kviz");
@@ -195,16 +220,66 @@ if (daLiJeIgraAktivirana("Kviz")) {
 
 	@FXML
 	void izaberiRangListu(ActionEvent event) {
+		listaGrupisanihIgara = FXCollections.observableArrayList();
+		listaGrupisanihIgara.clear();
+		String izbor = (String) cbRangLista.getValue();
+		for (Igra igra : listaOdigranihIgara) {
+			if (izbor.equals(igra.getTipIgre()))
+				listaGrupisanihIgara.add(igra);
+		}
 
+		Collections.sort(listaGrupisanihIgara, new Comparator<Igra>() {
+			public int compare(Igra igra1, Igra igra2) {
+				return Integer.valueOf(igra1.getBrojOsvojenihPoena())
+						.compareTo(Integer.valueOf(igra2.getBrojOsvojenihPoena()));
+			}
+		});
+
+		Collections.reverse(listaGrupisanihIgara);
+		int velicinaStatistike = listaGrupisanihIgara.size() > 10 ? 10 : listaGrupisanihIgara.size();
+		ArrayList<Igra> prvihDeset = new ArrayList<Igra>(listaGrupisanihIgara.subList(0, velicinaStatistike));
+		for (int i = 0; i < prvihDeset.size(); i++)
+			prvihDeset.get(i).setPozicijaURangListi(i + 1);
+		tblRangLista.setItems(FXCollections.observableList(prvihDeset));
+		tblRangLista.refresh();
 	}
 
 	@FXML
 	void sacuvajRezultat(ActionEvent event) {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Snimi rezultate");
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("CSV Files", "*.csv"));
+		fileChooser.setInitialDirectory(new File("Statistika"));
+		File odaberiFajl = fileChooser.showSaveDialog((Stage) btnSacuvajRezultat.getScene().getWindow());
+
+		if (odaberiFajl != null) {
+			try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(odaberiFajl)))) {
+
+				// zaglavlje
+				CSVUtils.writeLine(out, Arrays.asList("KorisniÄ�ko ime", "Vrsta igre", "Datum igranja", "Broj poena"));
+				System.out.println("dddddd " + listaOdigranihIgara.size());
+				for (Igra igra : listaOdigranihIgara) {
+					List<String> lista = new ArrayList<>();
+
+					lista.add(igra.getImeIgraca());
+					lista.add(igra.getTipIgre());
+					lista.add(igra.getDatumIgranja());
+					lista.add(Integer.toString(igra.getBrojOsvojenihPoena()));
+
+					CSVUtils.writeLine(out, lista);
+				}
+			} catch (IOException e) {
+				FileLogger.log(Level.SEVERE, null, e);
+				ObavjestenjaDijalog.showErrorDialog("Greska", "Ne moze se snimiti		 fajl!",
+						"GreÅ¡ka tokom snimanja fajla na lokaciji: \n" + odaberiFajl.getAbsolutePath());
+			}
+		}
 
 	}
 
 	@FXML
 	void izadji(ActionEvent event) {
+		sacuvajOdigranuIgru(listaOdigranihIgara, PUTANJA_DO_RANG_LISTE);
 		sacuvajKljuceve(mapaKljuceva, PUTANJA_DO_LISTE_KLJUCEVA);
 		mapaBodovaNaProfilu.put(korisnik.getKorisnickoIme(), korisnik.getBrojPoenaNaProfilu());
 		sacuvajBodoveNaProfilu(mapaBodovaNaProfilu, PUTANJA_DO_BODOVA_KORISNIKA);
@@ -233,22 +308,24 @@ if (daLiJeIgraAktivirana("Kviz")) {
 
 	private boolean daLiJeIgraAktivirana(String tipIgre) {
 		for (Map.Entry<String, Kljuc> ulaz : mapaKljuceva.entrySet()) {
-			if(ulaz.getValue().getImeVlasnikaKljuca().equals(korisnik.getKorisnickoIme()) && ulaz.getValue().getTipIgre().equals(tipIgre)){
-				if( ( daLiJeIstekaoKljuc(ulaz.getValue().getVrijemeDeaktiviranjaKljuca()) && ulaz.getValue().getStatusKLjuca().equals(StatusKljuca.AKTIVAN) )
-						|| ulaz.getValue().getStatusKLjuca().equals(StatusKljuca.ISKORISCEN)){
-					// ako je kljuc neiskoristen ime se nece podudarati tako da ne mozemo uci u ovaj iskaz
+			if (ulaz.getValue().getImeVlasnikaKljuca().equals(korisnik.getKorisnickoIme())
+					&& ulaz.getValue().getTipIgre().equals(tipIgre)) {
+				if ((daLiJeIstekaoKljuc(ulaz.getValue().getVrijemeDeaktiviranjaKljuca())
+						&& ulaz.getValue().getStatusKLjuca().equals(StatusKljuca.AKTIVAN))
+						|| ulaz.getValue().getStatusKLjuca().equals(StatusKljuca.ISKORISCEN)) {
+					// ako je kljuc neiskoristen ime se nece podudarati tako da
+					// ne mozemo uci u ovaj iskaz
 					ulaz.getValue().setStatusKLjuca(StatusKljuca.ISKORISCEN);
 					mapaKljuceva.put(ulaz.getKey(), ulaz.getValue());
-//					mapaKljuceva.replace(ulaz.getKey(), ulaz.getValue());
-				}
-				else
+					// mapaKljuceva.replace(ulaz.getKey(), ulaz.getValue());
+				} else
 					return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean daLiJeIstekaoKljuc(LocalDateTime vrijemeDeaktiviranjaKljuca){
+	private boolean daLiJeIstekaoKljuc(LocalDateTime vrijemeDeaktiviranjaKljuca) {
 		LocalDateTime trenutnoVrijeme = LocalDateTime.now();
 		return trenutnoVrijeme.isAfter(vrijemeDeaktiviranjaKljuca);
 	}
@@ -258,22 +335,22 @@ if (daLiJeIgraAktivirana("Kviz")) {
 		boolean rezultat = false;
 		switch (tipIgre) {
 		case "Pogodi broj":
-			if(korisnik.getBrojPoenaNaProfilu() > 0)
+			if (korisnik.getBrojPoenaNaProfilu() > 0)
 				rezultat = true;
 			break;
 		case "Kviz":
-			if(korisnik.getBrojPoenaNaProfilu() > 0)
+			if (korisnik.getBrojPoenaNaProfilu() > 0)
 				rezultat = true;
 			break;
 		case "Loto":
-			if(korisnik.getBrojPoenaNaProfilu() > 0)
+			if (korisnik.getBrojPoenaNaProfilu() > 0)
 				rezultat = true;
 			break;
 
 		default:
 			// dijalog
 		}
-		rezultat = true;	// samo privremeno
+		rezultat = true; // samo privremeno
 		return rezultat;
 	}
 
@@ -358,6 +435,42 @@ if (daLiJeIgraAktivirana("Kviz")) {
 					"Nije moguÄ‡e uÄ�itati kljuceve sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
 		}
 		return null;
+	}
+
+	/*
+	 * Serijalizacija odigranih igara
+	 */
+	private boolean sacuvajOdigranuIgru(ObservableList<Igra> listaOdigranihIgara, String putanja) {
+		File putanjaFile = new File(putanja);
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(putanjaFile))) {
+			oos.writeObject(new ArrayList<Igra>(listaOdigranihIgara));
+			oos.close();
+			return true;
+		} catch (IOException ex) {
+			FileLogger.log(Level.SEVERE, null, ex);
+			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije odigranih igara.",
+					"Nije moguÄ‡e saÄ�uvati rang listu na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
+		}
+		return false;
+	}
+
+	/*
+	 * Deserijalizacija odigranih igara
+	 */
+	@SuppressWarnings("unchecked")
+	private ObservableList<Igra> ucitajOdigraneIgre(String putanja) {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(putanja)))) {
+			ArrayList<Igra> list = (ArrayList<Igra>) ois.readObject();
+			return FXCollections.observableArrayList(list);
+		} catch (EOFException ex) {
+
+		} catch (ClassNotFoundException | IOException ex) {
+			FileLogger.log(Level.WARNING, null, ex);
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom deserijalizacije odigranih igara.",
+					"Nije moguÄ‡e uÄ�itati rang listu sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
+
+		}
+		return FXCollections.observableArrayList();
 	}
 
 	public static String getTipIgre() {

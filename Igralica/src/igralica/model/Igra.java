@@ -9,6 +9,7 @@ public class Igra implements Serializable {
 	private String imeIgraca;
 	private String datumIgranja;
 	private int brojOsvojenihPoena;
+	private int pozicijaURangListi;
 
 	public Igra() {
 		super();
@@ -52,6 +53,14 @@ public class Igra implements Serializable {
 
 	public void setBrojOsvojenihPoena(int brojOsvojenihPoena) {
 		this.brojOsvojenihPoena = brojOsvojenihPoena;
+	}
+
+	public int getPozicijaURangListi() {
+		return pozicijaURangListi;
+	}
+
+	public void setPozicijaURangListi(int pozicijaURangListi) {
+		this.pozicijaURangListi = pozicijaURangListi;
 	}
 
 }
