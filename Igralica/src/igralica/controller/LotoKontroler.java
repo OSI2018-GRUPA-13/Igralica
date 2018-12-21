@@ -188,17 +188,18 @@ public class LotoKontroler {
 	}
 
 	/*
-	 * Prosječni broj osvojenih poena u igri Loto iznosi 80. Želimo da on iznosi
-	 * 60 poena i da na taj način broj izgubljenih poena bude za 40% veći od
-	 * broja osvojenih (ulaže se 100 poena). Prije varanja:
-	 * (10+20+30+40+50+60+70)*(20/70) = 80 poena Da bi se postigao prosjek od 60
-	 * poena zbir koeficijenata treba smanjiti sa postojećih 280 na 210.
+	 * Prosjecni broj osvojenih poena u igri Loto iznosi 80.
+	 * Zelimo da on iznosi 60 poena i da na taj nacin broj izgubljenih poena bude
+	 * za 40% veci od broja osvojenih (ulaze se 100 poena).
+	 * Prije varanja: (10+20+30+40+50+60+70)*(20/70) = 80 poena.
+	 * Da bi se postigao prosjek od 60 poena zbir koeficijenata treba smanjiti
+	 * sa postojecih 280 na 210.
 	 * Brojevima u poljima tf3, tf5 i tf6 daje se 50% sanse da ukoliko su u
-	 * početnom izvlačenju pogođeni od strane korisnika, zaista i budu izvučeni.
+	 * pocetnom izvlacenju pogodajeni od strane korisnika, zaista i budu izvuceni.
 	 * Naime, brojevi sa kojima se vara vrijede redom 30, 50 i 60 poena, tj. sa
-	 * 50% sanse da budu izvučeni umanjuju zbir koefiacijenata za 70. Dodatni
-	 * poeni za svih sedam pogođenih brojeva nisu razmatrani, zbog male
-	 * vjerovatnoće da ta kombiancija bude izvučena.
+	 * 50% sanse da budu izvuceni umanjuju zbir koefiacijenata za 70.
+	 * Dodatni poeni za svih sedam pogodjenih brojeva nisu razmatrani, zbog male
+	 * vjerovatnoc da ta kombinacija bude izvucena.
 	 */
 	private void pokreniVaranjeKorisnika() {
 		if (daLiJeBrojPogodjen(Integer.parseInt(tf3.getText())) && daLiDaVaram())
@@ -214,7 +215,7 @@ public class LotoKontroler {
 	}
 
 	/*
-	 * Metoda daje 50% šansi korisniku da sačuva pogođeni broj
+	 * Metoda daje 50% Å¡ansi korisniku da saÄ�uva pogoÄ‘eni broj
 	 */
 	private boolean daLiDaVaram() {
 		Random rand = new Random();
@@ -233,7 +234,7 @@ public class LotoKontroler {
 			if (!uneseniBrojevi.contains(noviBroj))
 				izvucen = false;
 		}
-		// Izbaci na kraju kako ne bi slučajno vratio isti broj
+		// Izbaci na kraju kako ne bi sluÄ�ajno vratio isti broj
 		izvuceniBrojevi.remove(pogodjeniBroj);
 		izvuceniBrojevi.add(noviBroj);
 	}
@@ -241,7 +242,7 @@ public class LotoKontroler {
 	private void ispisBrojeva() {
 		LocalDateTime vrijemeSimulacije = LocalDateTime.now();
 		DateTimeFormatter formatVremena = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
-		taIzvuceniBrojevi.appendText("Loto izvlačenje " + formatVremena.format(vrijemeSimulacije) + "\n\n");
+		taIzvuceniBrojevi.appendText("Loto izvlaÄ�enje " + formatVremena.format(vrijemeSimulacije) + "\n\n");
 
 		int i = 0;
 		Iterator<Integer> iterator = izvuceniBrojevi.iterator();
