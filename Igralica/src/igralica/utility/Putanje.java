@@ -12,4 +12,5 @@ public interface Putanje {
 
 	public final static String PUTANJA_DO_LISTE_KLJUCEVA = "Lista kljuceva" + File.separator + "Lista kljuceva.ser";
 
+	public final static String PUTANJA_DO_LISTE_PITANJA = "Lista pitanja" + File.separator + "Lista pitanja.txt";
 }

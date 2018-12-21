@@ -66,11 +66,11 @@
                   </VBox>
                   <HBox alignment="CENTER_LEFT" maxHeight="280.0" minHeight="280.0" prefHeight="280.0" prefWidth="480.0">
                      <children>
-                        <TitledPane alignment="CENTER" collapsible="false" contentDisplay="CENTER" maxHeight="280.0" maxWidth="480.0" minHeight="280.0" minWidth="480.0" prefHeight="280.0" prefWidth="480.0" text="Igrice" textAlignment="CENTER">
+                        <TitledPane alignment="CENTER" collapsible="false" contentDisplay="CENTER" maxHeight="280.0" maxWidth="480.0" minHeight="280.0" minWidth="480.0" prefHeight="280.0" prefWidth="480.0" text="Igrice" textAlignment="CENTER" textFill="#b51717">
                            <content>
                               <AnchorPane maxHeight="280.0" maxWidth="480.0" minHeight="280.0" minWidth="480.0" prefHeight="280.0" prefWidth="480.0">
                                  <children>
-                                    <GridPane prefHeight="280.0" prefWidth="480.0" style="-fx-background-color: white;">
+                                    <GridPane prefHeight="280.0" prefWidth="480.0" style="-fx-background-color: LemonChiffon;">
                                        <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="20.0" />
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="220.0" />
@@ -86,7 +86,7 @@
                                        <children>
                                           <VBox maxHeight="100.0" maxWidth="185.0" minHeight="100.0" minWidth="185.0" prefHeight="100.0" prefWidth="185.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                              <children>
-                                                <Button fx:id="btnMojBroj" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaMojBroj" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="mojBroj" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <Button id="igra" fx:id="btnMojBroj" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaMojBroj" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="mojBroj" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <graphic>
                                                       <ImageView fitHeight="60.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -128,7 +128,7 @@
                                           </VBox>
                                           <VBox maxWidth="185.0" minHeight="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                              <children>
-                                                <Button fx:id="btnLoto" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaLoto" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="loto" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <Button id="igra" fx:id="btnLoto" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaLoto" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="loto" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <graphic>
                                                       <ImageView fitHeight="60.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -170,7 +170,7 @@
                                           </VBox>
                                           <VBox minHeight="100.0" minWidth="185.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="btnKviz" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaKviz" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="kviz" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <Button id="igra" fx:id="btnKviz" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaKviz" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="kviz" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <graphic>
                                                       <ImageView fitHeight="60.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -212,7 +212,7 @@
                                           </VBox>
                                           <VBox maxWidth="185.0" minHeight="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
-                                                <Button fx:id="btnPogodi" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaPogodi" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="pogodi" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <Button id="igra" fx:id="btnPogodi" minHeight="50.0" minWidth="70.0" mnemonicParsing="false" onAction="#akcijaPogodi" prefHeight="60.0" prefWidth="135.0" style="-fx-background-color: transparent;" text="pogodi" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <graphic>
                                                       <ImageView fitHeight="60.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
@@ -258,7 +258,7 @@
                               </AnchorPane>
                            </content>
                            <font>
-                              <Font name="System Bold Italic" size="12.0" />
+                              <Font name="Georgia Bold Italic" size="12.0" />
                            </font>
                         </TitledPane>
                      </children>
@@ -270,7 +270,7 @@
             </HBox>
             <HBox prefHeight="300.0" prefWidth="800.0">
                <children>
-                  <TableView fx:id="tblRangLista" maxHeight="280.0" minHeight="280.0" prefHeight="280.0" prefWidth="480.0">
+                  <TableView fx:id="tblRangLista" maxHeight="280.0" minHeight="280.0" prefHeight="280.0" prefWidth="480.0" style="-fx-background-color: LemonChiffon;">
                     <columns>
                       <TableColumn fx:id="tcPozicija" editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" text="Pozicija" />
                         <TableColumn fx:id="tcImeIgraca" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" text="Ime igrača" />
@@ -296,7 +296,7 @@
                                     <Insets bottom="8.0" left="40.0" />
                                  </VBox.margin>
                               </Label>
-                              <ComboBox fx:id="cbRangLista" onAction="#izaberiRangListu" prefHeight="25.0" prefWidth="145.0" />
+                              <ComboBox fx:id="cbRangLista" onAction="#izaberiRangListu" prefHeight="25.0" prefWidth="145.0" style="-fx-background-color: gold;" />
                            </children>
                            <VBox.margin>
                               <Insets left="70.0" top="30.0" />
