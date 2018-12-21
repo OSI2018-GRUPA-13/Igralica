@@ -1,5 +1,7 @@
 package igralica.controller;
 
+import static igralica.controller.GlavnaStranaKontroler.tblRangLista;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
@@ -90,6 +92,8 @@ public class KvizKontroler implements Putanje {
 
 		if (kraj) {
 			kraj = false;
+			tblRangLista.refresh();
+			GlavnaStranaKontroler.osvjezi();
 			final Node source = (Node) event.getSource();
 			final Stage stage = (Stage) source.getScene().getWindow();
 			stage.close();

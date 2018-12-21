@@ -33,3 +33,52 @@
     -fx-scale-y: 1.2;
     -fx-scale-z: 1.2;
 }
+
+.tableview {
+	-fx-padding: 10px;
+}
+
+.table-column {
+	-fx-alignment: center;
+	-fx-font-weight: bold;
+  	-fx-font-style: italic;
+  	-fx-text-fill: green;
+}
+
+.table-row-cell {
+  	-fx-control-inner-background: lightcyan ;
+ }
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, Lavender   ;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em;
+}
+
+.table-view .column-header .label {
+	-fx-background-color: gold;
+    -fx-text-fill: brown;
+}
+
+.list-cell {
+  	-fx-alignment: center;
+  	-fx-font-weight: bold;
+  	-fx-font-style: italic;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: orange;
+    -fx-text-fill: white;
+}
+
+.list-cell:odd{
+	-fx-background-color: #fffb00;
+}
+
+.list-cell:even{
+	-fx-background-color: #fffb00;
+}
+.list-cell:filled:selected {
+    -fx-background-color: orange;
+    -fx-text-fill: white;
+}

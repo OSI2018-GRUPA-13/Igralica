@@ -1,5 +1,5 @@
 package igralica.controller;
-
+import igralica.controller.GlavnaStranaKontroler;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -23,6 +23,7 @@ import igralica.dialogs.ObavjestenjaDijalog;
 
 import static igralica.controller.PocetnaStranaKontroler.korisnik;
 import static igralica.controller.GlavnaStranaKontroler.lblBrojBodovaNaProfilu;
+import static igralica.controller.GlavnaStranaKontroler.tblRangLista;
 
 public class LotoKontroler {
 
@@ -106,6 +107,8 @@ public class LotoKontroler {
 	@FXML
 	void izadji(ActionEvent event) {
 		izracunajBodoveNaProfilu();
+		tblRangLista.refresh();
+		GlavnaStranaKontroler.osvjezi();
 		final Node source = (Node) event.getSource();
 		final Stage stage = (Stage) source.getScene().getWindow();
 		stage.close();
@@ -163,7 +166,7 @@ public class LotoKontroler {
 		Iterator<Integer> iterator = uneseniBrojevi.iterator();
 		while (iterator.hasNext()) {
 			Integer broj = iterator.next();
-			if (broj < 0 || broj > 70)
+			if (broj < 1 || broj > 70)
 				return true;
 		}
 		return false;
@@ -188,18 +191,17 @@ public class LotoKontroler {
 	}
 
 	/*
-	 * Prosjecni broj osvojenih poena u igri Loto iznosi 80.
-	 * Zelimo da on iznosi 60 poena i da na taj nacin broj izgubljenih poena bude
-	 * za 40% veci od broja osvojenih (ulaze se 100 poena).
-	 * Prije varanja: (10+20+30+40+50+60+70)*(20/70) = 80 poena.
-	 * Da bi se postigao prosjek od 60 poena zbir koeficijenata treba smanjiti
-	 * sa postojecih 280 na 210.
+	 * ProsjeÄ�ni broj osvojenih poena u igri Loto iznosi 80. Å½elimo da on iznosi
+	 * 60 poena i da na taj naÄ�in broj izgubljenih poena bude za 40% veÄ‡i od
+	 * broja osvojenih (ulaÅ¾e se 100 poena). Prije varanja:
+	 * (10+20+30+40+50+60+70)*(20/70) = 80 poena Da bi se postigao prosjek od 60
+	 * poena zbir koeficijenata treba smanjiti sa postojeÄ‡ih 280 na 210.
 	 * Brojevima u poljima tf3, tf5 i tf6 daje se 50% sanse da ukoliko su u
-	 * pocetnom izvlacenju pogodajeni od strane korisnika, zaista i budu izvuceni.
+	 * poÄ�etnom izvlaÄ�enju pogoÄ‘eni od strane korisnika, zaista i budu izvuÄ�eni.
 	 * Naime, brojevi sa kojima se vara vrijede redom 30, 50 i 60 poena, tj. sa
-	 * 50% sanse da budu izvuceni umanjuju zbir koefiacijenata za 70.
-	 * Dodatni poeni za svih sedam pogodjenih brojeva nisu razmatrani, zbog male
-	 * vjerovatnoc da ta kombinacija bude izvucena.
+	 * 50% sanse da budu izvuÄ�eni umanjuju zbir koefiacijenata za 70. Dodatni
+	 * poeni za svih sedam pogoÄ‘enih brojeva nisu razmatrani, zbog male
+	 * vjerovatnoÄ‡e da ta kombiancija bude izvuÄ�ena.
 	 */
 	private void pokreniVaranjeKorisnika() {
 		if (daLiJeBrojPogodjen(Integer.parseInt(tf3.getText())) && daLiDaVaram())
@@ -215,7 +217,7 @@ public class LotoKontroler {
 	}
 
 	/*
-	 * Metoda daje 50% Å¡ansi korisniku da saÄ�uva pogoÄ‘eni broj
+	 * Metoda daje 50% sansi korisniku da sacuva pogodjeni broj
 	 */
 	private boolean daLiDaVaram() {
 		Random rand = new Random();
@@ -234,7 +236,7 @@ public class LotoKontroler {
 			if (!uneseniBrojevi.contains(noviBroj))
 				izvucen = false;
 		}
-		// Izbaci na kraju kako ne bi sluÄ�ajno vratio isti broj
+		// Izbaci na kraju kako ne bi slucajno vratio isti broj
 		izvuceniBrojevi.remove(pogodjeniBroj);
 		izvuceniBrojevi.add(noviBroj);
 	}
@@ -255,14 +257,14 @@ public class LotoKontroler {
 	}
 
 	private void ispisRezultata() {
-		int i = 7;
+		int i = 1;
 		Iterator<Integer> iterator = uneseniBrojevi.iterator();
 		while (iterator.hasNext()) {
 			if (izvuceniBrojevi.contains(iterator.next())) {
 				brojPogodaka++;
 				brojOsvojenihPoena += i * 10;
 			}
-			i--;
+			i++;
 		}
 		if (brojPogodaka == 7)
 			brojOsvojenihPoena += 100;
