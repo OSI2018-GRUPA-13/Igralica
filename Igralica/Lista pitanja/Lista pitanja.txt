@@ -1,0 +1,6 @@
+// Pitanja za kviz
+
+// Format za dodavanje pitanja je sljedeci:
+// 		pitanje ; tacan odgovor ; pogresan odgovor ; pogresan odgovor ;
+
+Kada je Linuks izmisljen? ; 1991 ; 2005 ; 1965 ; 1999

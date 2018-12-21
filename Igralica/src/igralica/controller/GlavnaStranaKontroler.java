@@ -139,7 +139,20 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaKviz(ActionEvent event) {
-
+if (daLiJeIgraAktivirana("Kviz")) {
+			if (daLiImaDovoljnoBodova("Kviz")) {
+				kreirajIgru("Kviz");
+				FxmlLoader.load(getClass(), "/igralica/view/Kviz.fxml", "Kviz");
+			} else {
+				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
+						"Nije moguće pokrenuti igru \"Kviz\" \nNemate doboljno bodova na profilu!");
+			}
+		} else {
+			setTipIgre("Kviz");
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
+					"Nije moguće pokrenuti igru \"Kviz\" \nIgra do sada nije aktivirana ili je trajanje ključa isteklo!");
+			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
+		}
 	}
 
 	@FXML
