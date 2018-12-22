@@ -78,7 +78,18 @@
 .list-cell:even{
 	-fx-background-color: #fffb00;
 }
+
 .list-cell:filled:selected {
     -fx-background-color: orange;
     -fx-text-fill: white;
+}
+
+#info {
+	-fx-background-color: LemonChiffon;
+}
+
+#info:hover{
+    -fx-background-color: MediumTurquoise ;
+	-fx-text-fill: LemonChiffon;
+    -fx-border-radius: 5;
 }

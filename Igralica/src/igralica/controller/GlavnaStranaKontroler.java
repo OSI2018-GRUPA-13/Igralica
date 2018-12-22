@@ -91,11 +91,23 @@ public class GlavnaStranaKontroler implements Putanje {
 	@FXML
 	private Button btnInfoMojBroj;
 
-    @FXML
-    private HBox hbKontejnerZaRangListu;
+	@FXML
+	private ComboBox<String> cbRangLista;
 
 	@FXML
-    private HBox hbKontejnerZaTabelu;
+	private TableView<Igra> tblRangLista;
+
+	@FXML
+	private TableColumn<Igra, String> tcPozicija;
+
+	@FXML
+	private TableColumn<Igra, String> tcImeIgraca;
+
+	@FXML
+	private TableColumn<Igra, String> tcDatumIgranja;
+
+	@FXML
+	private TableColumn<Igra, String> tcBrojBodova;
 
 	@FXML
 	private Button btnSacuvajRezultat;
@@ -104,15 +116,7 @@ public class GlavnaStranaKontroler implements Putanje {
 	private Button btnIzadji;
 
 	public static String tipIgre;
-
-	public static TableView<Igra> tblRangLista;
-	public static TableColumn<Igra, String> tcPozicija;
-	public static TableColumn<Igra, String> tcImeIgraca;
-	public static TableColumn<Igra, String> tcDatumIgranja;
-	public static TableColumn<Igra, String> tcBrojBodova;
-	public static ComboBox<String> cbRangLista;
 	public static Label lblBrojBodovaNaProfilu;
-
 	public static HashMap<String, Kljuc> mapaKljuceva = new HashMap<String, Kljuc>();
 	public static ObservableList<Igra> listaOdigranihIgara;
 	public static ObservableList<Igra> listaGrupisanihIgara;
@@ -125,9 +129,6 @@ public class GlavnaStranaKontroler implements Putanje {
 
 		kreirајLabeluZaBodoveNaProfilu();
 		lblBrojBodovaNaProfilu.setText(Integer.toString(korisnik.getBrojPoenaNaProfilu()));
-
-		kreirajTabelu();
-		kreirajPadajucuListu();
 
 		mapaKljuceva = ucitajKljuceve(PUTANJA_DO_LISTE_KLJUCEVA);
 
@@ -163,7 +164,6 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaKviz(ActionEvent event) {
-		setTipIgre("Kviz");
 		if (daLiJeIgraAktivirana("Kviz")) {
 			if (daLiImaDovoljnoBodova("Kviz")) {
 				kreirajIgru("Kviz");
@@ -173,6 +173,7 @@ public class GlavnaStranaKontroler implements Putanje {
 						"Nije moguće pokrenuti igru \"Kviz\" \nNemate doboljno bodova na profilu!");
 			}
 		} else {
+			setTipIgre("Kviz");
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
 					"Nije moguće pokrenuti igru \"Kviz\" \nIgra do sada nije aktivirana ili je trajanje ključa isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
@@ -186,19 +187,18 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaLoto(ActionEvent event) {
-		setTipIgre("Loto");
 		if (daLiJeIgraAktivirana("Loto")) {
 			if (daLiImaDovoljnoBodova("Loto")) {
 				kreirajIgru("Loto");
-//				showContent();
 				FxmlLoader.load(getClass(), "/igralica/view/Loto.fxml", "Loto");
 			} else {
 				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
 						"Nije moguÄ‡e pokrenuti igru \"Loto\" \nNemate doboljno bodova na profilu!");
 			}
 		} else {
+			setTipIgre("Loto");
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-					"Nije moguce pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
+					"Nije moguÄ‡e pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
 		}
 	}
@@ -304,64 +304,6 @@ public class GlavnaStranaKontroler implements Putanje {
 		lblBrojBodovaNaProfilu.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
 		lblBrojBodovaNaProfilu.setFont(Font.font("Verdana", FontPosture.ITALIC, 20));
 		hbKontejnerZaLabelu.getChildren().add(lblBrojBodovaNaProfilu);
-	}
-
-	@SuppressWarnings("unchecked")
-	public void kreirajTabelu() {
-		tblRangLista = new TableView<Igra>();
-		tblRangLista.setId("tblRangLista");
-		tblRangLista.setMaxHeight(280.0);
-		tblRangLista.setPrefHeight(280.0);
-		tblRangLista.setMinHeight(280.0);
-		tblRangLista.setStyle("-fx-background-color: #d5f6f6;");
-
-		tcPozicija = new TableColumn<Igra, String>();
-		tcImeIgraca = new TableColumn<Igra, String>();
-		tcDatumIgranja = new TableColumn<Igra, String>();
-		tcBrojBodova = new TableColumn<Igra, String>();
-
-		tcPozicija.setId("tcPozicija");
-		tcPozicija.setEditable(false);
-		tcPozicija.setMaxWidth(50.0);
-		tcPozicija.setMinWidth(50.0);
-		tcPozicija.setPrefWidth(50.0);
-		tcPozicija.setText("Pozicija");
-
-		tcImeIgraca.setId("tcImeIgraca");
-		tcImeIgraca.setEditable(false);
-		tcImeIgraca.setMaxWidth(145.0);
-		tcImeIgraca.setMinWidth(145.0);
-		tcImeIgraca.setPrefWidth(145.0);
-		tcImeIgraca.setText("Ime igrača");
-
-		tcDatumIgranja.setId("tcDatumIgranja");
-		tcDatumIgranja.setEditable(false);
-		tcDatumIgranja.setMaxWidth(180.0);
-		tcDatumIgranja.setMinWidth(180.0);
-		tcDatumIgranja.setPrefWidth(180.0);
-		tcDatumIgranja.setText("Datum igranja");
-
-		tcBrojBodova.setId("tcPozicija");
-		tcBrojBodova.setEditable(false);
-		tcBrojBodova.setMaxWidth(100.0);
-		tcBrojBodova.setMinWidth(100.0);
-		tcBrojBodova.setPrefWidth(100.0);
-		tcBrojBodova.setText("Broj bodova");
-
-		tblRangLista.getColumns().addAll(tcPozicija, tcImeIgraca, tcDatumIgranja, tcBrojBodova);
-		tblRangLista.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-		hbKontejnerZaTabelu.getChildren().add(tblRangLista);
-	}
-
-	private void kreirajPadajucuListu(){
-		cbRangLista = new ComboBox<String>();
-		cbRangLista.setId("cbRangLista");
-		cbRangLista.setOnAction( e -> izaberiRangListu(e));
-		cbRangLista.setPrefHeight(250);
-		cbRangLista.setPrefWidth(145.0);
-		cbRangLista.setStyle("-fx-background-color: gold;");
-		hbKontejnerZaRangListu.getChildren().add(cbRangLista);
 	}
 
 	private boolean daLiJeIgraAktivirana(String tipIgre) {
@@ -506,8 +448,8 @@ public class GlavnaStranaKontroler implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("Greska", "Greska tokom serijalizacije odigranih igara.",
-					"Nije moguce sacuvati rang listu na sljedecoj putanji: \n" + putanjaFile.getAbsolutePath());
+			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije odigranih igara.",
+					"Nije moguÄ‡e saÄ�uvati rang listu na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
 		}
 		return false;
 	}
@@ -539,30 +481,4 @@ public class GlavnaStranaKontroler implements Putanje {
 		GlavnaStranaKontroler.tipIgre = tipIgre;
 	}
 
-	public static void osvjezi(){
-		listaGrupisanihIgara = FXCollections.observableArrayList();
-		listaGrupisanihIgara.clear();
-		String izbor = (String) cbRangLista.getValue();
-		if(izbor == null)
-			izbor = "Sve igre";
-		for (Igra igra : listaOdigranihIgara) {
-			if (izbor.equals(igra.getTipIgre()))
-				listaGrupisanihIgara.add(igra);
-		}
-
-		Collections.sort(listaGrupisanihIgara, new Comparator<Igra>() {
-			public int compare(Igra igra1, Igra igra2) {
-				return Integer.valueOf(igra1.getBrojOsvojenihPoena())
-						.compareTo(Integer.valueOf(igra2.getBrojOsvojenihPoena()));
-			}
-		});
-
-		Collections.reverse(listaGrupisanihIgara);
-		int velicinaStatistike = listaGrupisanihIgara.size() > 10 ? 10 : listaGrupisanihIgara.size();
-		ArrayList<Igra> prvihDeset = new ArrayList<Igra>(listaGrupisanihIgara.subList(0, velicinaStatistike));
-		for (int i = 0; i < prvihDeset.size(); i++)
-			prvihDeset.get(i).setPozicijaURangListi(i + 1);
-		tblRangLista.setItems(FXCollections.observableList(prvihDeset));
-		tblRangLista.refresh();
-	}
 }
