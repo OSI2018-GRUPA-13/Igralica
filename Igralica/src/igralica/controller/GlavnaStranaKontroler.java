@@ -163,6 +163,7 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaKviz(ActionEvent event) {
+		setTipIgre("Kviz");
 		if (daLiJeIgraAktivirana("Kviz")) {
 			if (daLiImaDovoljnoBodova("Kviz")) {
 				kreirajIgru("Kviz");
@@ -172,7 +173,6 @@ public class GlavnaStranaKontroler implements Putanje {
 						"Nije moguće pokrenuti igru \"Kviz\" \nNemate doboljno bodova na profilu!");
 			}
 		} else {
-			setTipIgre("Kviz");
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
 					"Nije moguće pokrenuti igru \"Kviz\" \nIgra do sada nije aktivirana ili je trajanje ključa isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
@@ -186,6 +186,7 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaLoto(ActionEvent event) {
+		setTipIgre("Loto");
 		if (daLiJeIgraAktivirana("Loto")) {
 			if (daLiImaDovoljnoBodova("Loto")) {
 				kreirajIgru("Loto");
@@ -196,9 +197,8 @@ public class GlavnaStranaKontroler implements Putanje {
 						"Nije moguÄ‡e pokrenuti igru \"Loto\" \nNemate doboljno bodova na profilu!");
 			}
 		} else {
-			setTipIgre("Loto");
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-					"Nije moguÄ‡e pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
+					"Nije moguce pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
 		}
 	}
@@ -543,6 +543,8 @@ public class GlavnaStranaKontroler implements Putanje {
 		listaGrupisanihIgara = FXCollections.observableArrayList();
 		listaGrupisanihIgara.clear();
 		String izbor = (String) cbRangLista.getValue();
+		if(izbor == null)
+			izbor = "Sve igre";
 		for (Igra igra : listaOdigranihIgara) {
 			if (izbor.equals(igra.getTipIgre()))
 				listaGrupisanihIgara.add(igra);
