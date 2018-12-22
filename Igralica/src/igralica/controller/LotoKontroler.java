@@ -1,5 +1,5 @@
 package igralica.controller;
-import igralica.controller.GlavnaStranaKontroler;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import igralica.dialogs.ObavjestenjaDijalog;
+import igralica.controller.GlavnaStranaKontroler;
 
 import static igralica.controller.PocetnaStranaKontroler.korisnik;
 import static igralica.controller.GlavnaStranaKontroler.lblBrojBodovaNaProfilu;

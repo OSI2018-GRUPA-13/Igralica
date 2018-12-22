@@ -18,14 +18,14 @@ public class KreiranjeKjuca implements Putanje {
 
 	public static void main(String[] args) {
 
-		mapaKljuceva.put("1111-1111-1111-1111", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SAT, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1112", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SAT, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1113", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.DAN, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1114", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.DAN, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1115", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SEDMICA, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1116", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SEDMICA, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1117",	new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.NEOGRANICENO, "Pogodi"));
-		mapaKljuceva.put("1111-1111-1111-1118",	new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.NEOGRANICENO, "Pogodi"));
+		mapaKljuceva.put("1111-1111-1111-1111", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SAT, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1112", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SAT, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1113", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.DAN, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1114", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.DAN, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1115", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SEDMICA, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1116", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SEDMICA, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1117",	new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.NEOGRANICENO, "Pogodi broj"));
+		mapaKljuceva.put("1111-1111-1111-1118",	new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.NEOGRANICENO, "Pogodi broj"));
 		mapaKljuceva.put("2222-2222-2222-2221", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SAT, "Kviz"));
 		mapaKljuceva.put("2222-2222-2222-2222", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.SAT, "Kviz"));
 		mapaKljuceva.put("2222-2222-2222-2223", new Kljuc(StatusKljuca.DOSTUPAN, TrajanjeKljuca.DAN, "Kviz"));
@@ -57,9 +57,9 @@ public class KreiranjeKjuca implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("Greška", "Greška tokom serijalizacije ključeva.",
-					"Nije moguće sačuvati ključeve na sljedećoj putanji: \n" + putanjaFile.getAbsolutePath());
-	
+			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije kljuÄ�eva.",
+					"Nije moguÄ‡e saÄ�uvati kljuÄ�eve na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
+
 		}
 		return false;
 	}
