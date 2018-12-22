@@ -1,3 +1,1 @@
 korisnickoIme#ime#prezime#salt#EnkriptovanaIBase64KodovanaKorisnickaLozinka#fotografija
-Edith#Edith#Gru#YBNX0mfANABCMDc617EYvJXIfoM6Ej#h47vXYYhxpWoCkiXQ7lEb0Oa/skkKph6iOlhNx8k450=#.\Slike korisnika\Edith Gru.png
-danielcrnovcic#daniel#crnovcic#j5MDDCQnN7sMUThkiyi5n1JTbvKY4p#n1pYTmvtgGJ8buhIoI8PHCmGHiDiHmExHxVOdURcyuc=#.\Slike korisnika\Homer Simpson.png
