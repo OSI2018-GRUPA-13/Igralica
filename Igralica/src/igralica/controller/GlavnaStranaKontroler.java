@@ -153,12 +153,26 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void akcijaPogodi(ActionEvent event) {
-
+		setTipIgre("Pogodi broj");
+		if (daLiJeIgraAktivirana("Pogodi broj")) {
+			if (daLiImaDovoljnoBodova("Pogodi broj")) {
+				kreirajIgru("Pogodi broj");
+				FxmlLoader.load(getClass(), "/igralica/view/PogodiBroj.fxml", "Pogodi broj");
+			} else {
+				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
+						"Nije moguce pokrenuti igru \"Pogodi broj\" \nNemate doboljno bodova na profilu!");
+			}
+		} else {
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
+					"Nije moguce pokrenuti igru \"Pogodi broj\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
+			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
+		}
 	}
 
 	@FXML
 	void infoPogodi(ActionEvent event) {
-
+		InformacijeOIgriKontroler.setTipIgreInfo("Pogodi broj");
+		FxmlLoader.load(getClass(), "/igralica/view/InformacijeOIgri.fxml", "Info");
 	}
 
 	@FXML
@@ -181,7 +195,8 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void infoKviz(ActionEvent event) {
-
+		InformacijeOIgriKontroler.setTipIgreInfo("Kviz");
+		FxmlLoader.load(getClass(), "/igralica/view/InformacijeOIgri.fxml", "Info");
 	}
 
 	@FXML
@@ -190,7 +205,6 @@ public class GlavnaStranaKontroler implements Putanje {
 		if (daLiJeIgraAktivirana("Loto")) {
 			if (daLiImaDovoljnoBodova("Loto")) {
 				kreirajIgru("Loto");
-//				showContent();
 				FxmlLoader.load(getClass(), "/igralica/view/Loto.fxml", "Loto");
 			} else {
 				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
@@ -205,7 +219,8 @@ public class GlavnaStranaKontroler implements Putanje {
 
 	@FXML
 	void infoLoto(ActionEvent event) {
-
+		InformacijeOIgriKontroler.setTipIgreInfo("Loto");
+		FxmlLoader.load(getClass(), "/igralica/view/InformacijeOIgri.fxml", "Info");
 	}
 
 	@FXML
@@ -401,7 +416,7 @@ public class GlavnaStranaKontroler implements Putanje {
 				rezultat = true;
 			break;
 		case "Loto":
-			if (korisnik.getBrojPoenaNaProfilu() > 0)
+			if (korisnik.getBrojPoenaNaProfilu() > 100)
 				rezultat = true;
 			break;
 
