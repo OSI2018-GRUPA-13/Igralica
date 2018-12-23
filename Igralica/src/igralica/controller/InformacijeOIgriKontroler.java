@@ -73,6 +73,7 @@ public class InformacijeOIgriKontroler {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
 			kljucKorisnika.getValue().setStatusKLjuca(StatusKljuca.ISKORISCEN);
+			izadji(event);
 		}
 	}
 
