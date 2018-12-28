@@ -1,0 +1,1 @@
+korisnickoIme#ime#prezime#salt#EnkriptovanaIBase64KodovanaKorisnickaLozinka#fotografija
