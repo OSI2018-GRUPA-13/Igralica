@@ -140,11 +140,11 @@ public class PitanjaZaKviz {
 		// Racunanje procenta
 		int procenatUspjesnosti = (int) ((brojTacnihOdgovora / 5.0) * 100);
 
-		// Prikaz obavjeÅ¡tenja
-		String naslov = "ObavjeÅ¡tenje";
-		String zaglavlje = "ZavrÅ¡ili ste igru \"Kviz\"!";
+		// Prikaz obavjestenja
+		String naslov = "Obavjestenje";
+		String zaglavlje = "Zavrsili ste igru \"Kviz\"!";
 		String poruka = "Rezultat: " + rezultat + "\nBroj tacnih odgovora: " + brojTacnihOdgovora
-				+ "\nBroj postavljenih pitanja: 5" + "\nProcenat uspjeÅ¡nosti: (" + procenatUspjesnosti + "%)";
+				+ "\nBroj postavljenih pitanja: 5" + "\nProcenat uspjesnosti: (" + procenatUspjesnosti + "%)";
 		ObavjestenjaDijalog.showInfoDialog(naslov, zaglavlje, poruka);
 	}
 

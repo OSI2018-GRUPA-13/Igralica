@@ -174,6 +174,7 @@ public class PogodiBrojKontroler implements Initializable {
     private void zamisliBroj() {
 		Random rand = new Random();
 		zamisljeniBroj = rand.nextInt(100) + 1;
+		System.out.print(zamisljeniBroj);
 	}
 
 	private void dodajBroj(int broj) {

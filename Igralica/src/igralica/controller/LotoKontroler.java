@@ -273,7 +273,7 @@ public class LotoKontroler {
 
 	private void izracunajBodoveNaProfilu() {
 		korisnik.getTrenutnaIgra().setBrojOsvojenihPoena(brojOsvojenihPoena);
-		korisnik.setBrojPoenaNaProfilu(korisnik.getBrojPoenaNaProfilu() + brojOsvojenihPoena);
+		korisnik.setBrojPoenaNaProfilu(korisnik.getBrojPoenaNaProfilu() + brojOsvojenihPoena - 100);
 		lblBrojBodovaNaProfilu.setText(Integer.toString(korisnik.getBrojPoenaNaProfilu()));
 	}
 }

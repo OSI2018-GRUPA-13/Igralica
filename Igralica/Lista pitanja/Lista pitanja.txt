@@ -8,7 +8,7 @@ Oduzimas mi dah, je hit grupe? ; Colonia ; Sax ; Spektar;
 Iznad Uzica se nalazi? ; Zlatibor ; Avala ; Velebit ;
 Nadimak za Srbina iz Uzica ili okoline Uzica? ; Era ; Gedza ; Cokalija ;
 Jean Michel Jarre je? ; Klavijaturista ; Fudbaler ; Gangster ;
-Srbija se ne granici sa? ; Turskom ; MaÄ‘arskom ; Makedonijom ;
+Srbija se ne granici sa? ; Turskom ; Madjarskom ; Makedonijom ;
 C,E,G su note? ; C dura ; C maja ; C mola ;
 U jednom mjesecu tri subote su parnog datuma. Koji da je 25-tog u tom mjesecu? ; Ponedeljak ; Utorak ; Srijeda ;
 Promil je koji dio cjeline? ; Hiljaditi ; Stoti ; Deseti ;
