@@ -137,8 +137,6 @@ public class GlavnaStranaKontroler implements Putanje {
 		cbRangLista.getItems().add("Moj broj");
 
 		listaOdigranihIgara = ucitajOdigraneIgre(PUTANJA_DO_RANG_LISTE);
-		// tblRangLista.setItems(listaOdigranihIgara);
-		// tblRangLista.refresh();
 
 		tcPozicija.setCellValueFactory(new PropertyValueFactory<>("pozicijaURangListi"));
 		tcDatumIgranja.setCellValueFactory(new PropertyValueFactory<>("datumIgranja"));
@@ -160,11 +158,11 @@ public class GlavnaStranaKontroler implements Putanje {
 				FxmlLoader.load(getClass(), "/igralica/view/PogodiBroj.fxml", "Pogodi broj");
 			} else {
 				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-						"Nije moguce pokrenuti igru \"Pogodi broj\" \nNemate doboljno bodova na profilu!");
+						"Nije moguce pokrenuti igru \"Pogodi broj\" \nNemate dovoljno bodova na profilu!");
 			}
 		} else {
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-					"Nije moguce pokrenuti igru \"Pogodi broj\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
+					"Nije moguce pokrenuti igru \"Pogodi broj\" \nIgra do sada nije aktivirana ili je trajanje kljuca isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
 		}
 	}
@@ -184,11 +182,11 @@ public class GlavnaStranaKontroler implements Putanje {
 				FxmlLoader.load(getClass(), "/igralica/view/Kviz.fxml", "Kviz");
 			} else {
 				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-						"Nije moguće pokrenuti igru \"Kviz\" \nNemate doboljno bodova na profilu!");
+						"Nije moguce pokrenuti igru \"Kviz\" \nNemate dovoljno bodova na profilu!");
 			}
 		} else {
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-					"Nije moguće pokrenuti igru \"Kviz\" \nIgra do sada nije aktivirana ili je trajanje ključa isteklo!");
+					"Nije moguce pokrenuti igru \"Kviz\" \nIgra do sada nije aktivirana ili je trajanje kljuca isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
 		}
 	}
@@ -208,11 +206,11 @@ public class GlavnaStranaKontroler implements Putanje {
 				FxmlLoader.load(getClass(), "/igralica/view/Loto.fxml", "Loto");
 			} else {
 				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-						"Nije moguÄ‡e pokrenuti igru \"Loto\" \nNemate doboljno bodova na profilu!");
+						"Nije moguce pokrenuti igru \"Loto\" \nNemate dovoljno bodova na profilu!");
 			}
 		} else {
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom pokretanja igre.",
-					"Nije moguce pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuÄ�a isteklo!");
+					"Nije moguce pokrenuti igru \"Loto\" \nIgra do sada nije aktivirana ili je trajanje kljuca isteklo!");
 			FxmlLoader.load(getClass(), "/igralica/view/UnosKljuca.fxml", "Unos kljuca");
 		}
 	}
@@ -271,8 +269,7 @@ public class GlavnaStranaKontroler implements Putanje {
 			try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(odaberiFajl)))) {
 
 				// zaglavlje
-				CSVUtils.writeLine(out, Arrays.asList("KorisniÄ�ko ime", "Vrsta igre", "Datum igranja", "Broj poena"));
-				System.out.println("dddddd " + listaOdigranihIgara.size());
+				CSVUtils.writeLine(out, Arrays.asList("Korisnicko ime", "Vrsta igre", "Datum igranja", "Broj poena"));
 				for (Igra igra : listaOdigranihIgara) {
 					List<String> lista = new ArrayList<>();
 
@@ -286,7 +283,7 @@ public class GlavnaStranaKontroler implements Putanje {
 			} catch (IOException e) {
 				FileLogger.log(Level.SEVERE, null, e);
 				ObavjestenjaDijalog.showErrorDialog("Greska", "Ne moze se snimiti		 fajl!",
-						"GreÅ¡ka tokom snimanja fajla na lokaciji: \n" + odaberiFajl.getAbsolutePath());
+						"Greska tokom snimanja fajla na lokaciji: \n" + odaberiFajl.getAbsolutePath());
 			}
 		}
 
@@ -390,7 +387,6 @@ public class GlavnaStranaKontroler implements Putanje {
 					// ne mozemo uci u ovaj iskaz
 					ulaz.getValue().setStatusKLjuca(StatusKljuca.ISKORISCEN);
 					mapaKljuceva.put(ulaz.getKey(), ulaz.getValue());
-					// mapaKljuceva.replace(ulaz.getKey(), ulaz.getValue());
 				} else
 					return true;
 			}
@@ -404,7 +400,6 @@ public class GlavnaStranaKontroler implements Putanje {
 	}
 
 	private boolean daLiImaDovoljnoBodova(String tipIgre) {
-		// NE ZAVRSENO
 		boolean rezultat = false;
 		switch (tipIgre) {
 		case "Pogodi broj":
@@ -421,9 +416,7 @@ public class GlavnaStranaKontroler implements Putanje {
 			break;
 
 		default:
-			// dijalog
 		}
-		rezultat = true; // samo privremeno
 		return rezultat;
 	}
 
@@ -446,8 +439,8 @@ public class GlavnaStranaKontroler implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije bodova na profilu korisnika.",
-					"Nije moguÄ‡e saÄ�uvati bodove na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
+			ObavjestenjaDijalog.showErrorDialog("Greska", "Greska tokom serijalizacije bodova na profilu korisnika.",
+					"Nije moguce sacuvati bodove na sljedecoj putanji: \n" + putanjaFile.getAbsolutePath());
 		}
 		return false;
 	}
@@ -462,14 +455,14 @@ public class GlavnaStranaKontroler implements Putanje {
 			return mapa;
 		} catch (EOFException ex) {
 			// izuzetak se baca ako je na pocetku data datoteka prazna, sto je i
-			// slucaj za prvog registrovanog korisnika
+			// slucaj za prvog registrovanog korisnika. Slucaj samo upisati u log.
 			FileLogger.log(Level.WARNING, null, ex);
 			return new HashMap<String, Integer>();
 		} catch (ClassNotFoundException | IOException ex) {
 			FileLogger.log(Level.WARNING, null, ex);
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje",
 					"Upozorenje tokom deserijalizacije bodova na profilu korisnika.",
-					"Nije moguÄ‡e uÄ�itati bodove sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
+					"Nije moguce ucitati bodove sa sljedece putanje: \n" + new File(putanja).getAbsolutePath());
 		}
 		return null;
 	}
@@ -485,8 +478,8 @@ public class GlavnaStranaKontroler implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije kljuÄ�eva.",
-					"Nije moguÄ‡e saÄ�uvati kljuÄ�eve na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
+			ObavjestenjaDijalog.showErrorDialog("Greska", "Greska tokom serijalizacije kljuceva.",
+					"Nije moguce sacuvati kljuceve na sljedecoj putanji: \n" + putanjaFile.getAbsolutePath());
 		}
 		return false;
 	}
@@ -505,7 +498,7 @@ public class GlavnaStranaKontroler implements Putanje {
 		} catch (ClassNotFoundException | IOException ex) {
 			FileLogger.log(Level.WARNING, null, ex);
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom deserijalizacije kljuceva.",
-					"Nije moguÄ‡e uÄ�itati kljuceve sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
+					"Nije moguce ucitati kljuceve sa sljedece putanje: \n" + new File(putanja).getAbsolutePath());
 		}
 		return null;
 	}
@@ -540,7 +533,7 @@ public class GlavnaStranaKontroler implements Putanje {
 		} catch (ClassNotFoundException | IOException ex) {
 			FileLogger.log(Level.WARNING, null, ex);
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Upozorenje tokom deserijalizacije odigranih igara.",
-					"Nije moguÄ‡e uÄ�itati rang listu sa sljedeÄ‡e putanje: \n" + new File(putanja).getAbsolutePath());
+					"Nije moguce ucitati rang listu sa sljedece putanje: \n" + new File(putanja).getAbsolutePath());
 
 		}
 		return FXCollections.observableArrayList();

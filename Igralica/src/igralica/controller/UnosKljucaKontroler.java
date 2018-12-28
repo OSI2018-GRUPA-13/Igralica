@@ -42,16 +42,16 @@ public class UnosKljucaKontroler {
 
 				mapaKljuceva.get(kljuc).aktivirajKljuc();
 				obavjestenje = "Uspješno se aktivirali igru " + tipIgre + "!";
-				ObavjestenjaDijalog.showInfoDialog("Obavještenje", "Uneseni ključ je ispravan!", obavjestenje);
+				ObavjestenjaDijalog.showInfoDialog("Obavjestenje", "Uneseni kljuc je ispravan!", obavjestenje);
 				close();
 			} else {
 				obavjestenje = "Niste aktivirali igru " + tipIgre + "!";
-				ObavjestenjaDijalog.showInfoDialog("Obavještenje", "Uneseni ključ je prethodno iskorišten!",
+				ObavjestenjaDijalog.showInfoDialog("Obavjestenje", "Uneseni kljuc je prethodno iskoristen!",
 						obavjestenje);
 			}
 		} else {
 			obavjestenje = "Niste aktivirali igru " + tipIgre + "!";
-			ObavjestenjaDijalog.showInfoDialog("Obavještenje", "Uneseni ključ nije ispravan!", obavjestenje);
+			ObavjestenjaDijalog.showInfoDialog("Obavjestenje", "Uneseni kljuc nije ispravan!", obavjestenje);
 		}
 	}
 

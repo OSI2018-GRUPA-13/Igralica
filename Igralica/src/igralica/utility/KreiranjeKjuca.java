@@ -57,8 +57,8 @@ public class KreiranjeKjuca implements Putanje {
 			return true;
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom serijalizacije kljuÄ�eva.",
-					"Nije moguÄ‡e saÄ�uvati kljuÄ�eve na sljedeÄ‡oj putanji: \n" + putanjaFile.getAbsolutePath());
+			ObavjestenjaDijalog.showErrorDialog("Greska", "Greska tokom serijalizacije kljuceva.",
+					"Nije moguce sacuvati kljuceve na sljedecoj putanji: \n" + putanjaFile.getAbsolutePath());
 
 		}
 		return false;

@@ -57,12 +57,12 @@ public class PitanjaZaKviz {
 			});
 		} catch (IOException ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
-			ObavjestenjaDijalog.showErrorDialog("GreÅ¡ka", "GreÅ¡ka tokom uÄ�itavanja datoteke sa pitanja!",
-					"Datoteka sa pitanjima nije pronaÄ‘ena na sljedeÄ‡oj putanji: \n"
+			ObavjestenjaDijalog.showErrorDialog("Greska", "Greska tokom ucitavanja datoteke sa pitanja!",
+					"Datoteka sa pitanjima nije pronadjena na sljedecoj putanji: \n"
 							+ new File(putanja).getAbsolutePath());
 		}
 		if (listaPitanja.isEmpty()) {
-			ObavjestenjaDijalog.showErrorDialog("Upozorenje", "Upozorenje tokom uÄ�itavanja pitanja!",
+			ObavjestenjaDijalog.showErrorDialog("Upozorenje", "Upozorenje tokom ucitavanja pitanja!",
 					"Datoteka sa pitanjima je prazna. \n");
 		}
 		return listaPitanja;

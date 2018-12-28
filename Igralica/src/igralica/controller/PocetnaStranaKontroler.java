@@ -57,8 +57,8 @@ public class PocetnaStranaKontroler implements Putanje{
 			} else {
 				lblStatus.setText("Pokušajte ponovo");
 
-				String upozorenje = "Uneseno korisničko ime ili šifra nisu korektni!";
-				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Niste se uspješno prijavili!", upozorenje);
+				String upozorenje = "Uneseno korisnicko ime ili sifra nisu korektni!";
+				ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Niste se uspjesno prijavili!", upozorenje);
 			}
 		} catch (Exception ex) {
 			FileLogger.log(Level.SEVERE, null, ex);
@@ -90,8 +90,8 @@ public class PocetnaStranaKontroler implements Putanje{
 				}
 			}
 		} catch (IOException ex) {
-			String porukaOGresci = "IO greška se javlja tokom čitanja iz stream-a.!";
-			ObavjestenjaDijalog.showErrorDialog("Greška", "Došlo je do greške!", porukaOGresci);
+			String porukaOGresci = "IO greska se javlja tokom citanja iz stream-a.!";
+			ObavjestenjaDijalog.showErrorDialog("Greska", "Doslo je do greske!", porukaOGresci);
 		}
 
 		return false;
@@ -113,7 +113,7 @@ public class PocetnaStranaKontroler implements Putanje{
 			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
 			return skf.generateSecret(specifikacija).getEncoded();
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			throw new AssertionError("Greška tokom hešovanja lozinke: " + e.getMessage(), e);
+			throw new AssertionError("Greska tokom hesovanja lozinke: " + e.getMessage(), e);
 		} finally {
 			specifikacija.clearPassword();
 		}

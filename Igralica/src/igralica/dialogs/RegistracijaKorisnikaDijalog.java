@@ -238,18 +238,18 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 
 		if (porukaOPogresnomUnosu.length() != 0) {
 			ObavjestenjaDijalog.showWarningDialog("Upozorenje",
-					"Niste unijeli sva polja!\nUnesite sljedeća polja u dijalog:", porukaOPogresnomUnosu);
+					"Niste unijeli sva polja!\nUnesite sljedeca polja u dijalog:", porukaOPogresnomUnosu);
 			return false;
 		} else if (ValidacijaUnosa.vecPostoji(tfKorisnickoIme.getText())) {
-			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Uneseno korisničko ime već postoji!",
-					"Pokušajte ponovo.");
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Uneseno korisnicko ime vec postoji!",
+					"Pokusajte ponovo.");
 			return false;
 		} else if (ValidacijaUnosa.duzinaLozinke(pfLozinka.getText())) {
-			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Lozinka mora biti duža od četiri karaktera!",
-					"Pokušajte ponovo.");
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Lozinka mora biti duža od cetiri karaktera!",
+					"Pokusajte ponovo.");
 			return false;
 		} else if (ValidacijaUnosa.nepodudaranjeLozinki(pfLozinka.getText(), pfLozinkaPonovljeno.getText())) {
-			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Unesene lozinke se ne podudaraju!", "Pokušajte ponovo.");
+			ObavjestenjaDijalog.showWarningDialog("Upozorenje", "Unesene lozinke se ne podudaraju!", "Pokusajte ponovo.");
 			return false;
 		} else
 			return true;
@@ -310,8 +310,8 @@ public class RegistracijaKorisnikaDijalog implements Putanje{
 				listaKorisnickihImena.add(podaci[0]);
 			}
 		} catch (IOException ex) {
-			String porukaOGresci = "IO greška se javlja tokom čitanja iz stream-a.!";
-			ObavjestenjaDijalog.showErrorDialog("Greška", "Došlo je do greške!", porukaOGresci);
+			String porukaOGresci = "IO greska se javlja tokom citanja iz stream-a.!";
+			ObavjestenjaDijalog.showErrorDialog("Greska", "Doslo je do greske!", porukaOGresci);
 		}
 	}
 

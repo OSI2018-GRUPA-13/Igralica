@@ -33,7 +33,7 @@ public class PasswordUtils {
 			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
 			return skf.generateSecret(spec).getEncoded();
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			throw new AssertionError("Gresk tokom hesovanja lozinke: " + e.getMessage(), e);
+			throw new AssertionError("Greska tokom hesovanja lozinke: " + e.getMessage(), e);
 		} finally {
 			spec.clearPassword();
 		}
