@@ -91,7 +91,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="60.0" fitWidth="135.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../style/MojBroj.gif" />
+                                                            <Image url="@../style/MojBroj.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
